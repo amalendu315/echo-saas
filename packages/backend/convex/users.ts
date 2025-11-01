@@ -1,5 +1,4 @@
 import {query, mutation} from "./_generated/server";
-import {v} from "convex/values";
 
 export const getMany = query({
     args:{},
@@ -14,6 +13,10 @@ export const userMutation = mutation({
 
     },
     handler:async(ctx)=>{
+        const identity = await ctx.auth.getUserIdentity();
+        if(identity === null){
+            throw new Error("Not Authenticated")
+        }
         const userId = await ctx.db.insert("users",{
             name:"Kunal"
         });
