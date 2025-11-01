@@ -17,6 +17,10 @@ export const userMutation = mutation({
         if(identity === null){
             throw new Error("Not Authenticated")
         }
+        const orgId = identity.orgId as string;
+        if(!orgId){
+            throw new Error("Invalid Organization Id")
+        }
         const userId = await ctx.db.insert("users",{
             name:"Kunal"
         });
